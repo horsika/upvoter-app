@@ -1,6 +1,8 @@
 package com.horsika.upvoterapp.domain;
 
+import com.horsika.upvoterapp.dto.RegisterLoginCommand;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -68,5 +70,4 @@ public class AppUser implements UserDetails {
         return true;
     }
 
-    // TODO constructor based on dto
 }

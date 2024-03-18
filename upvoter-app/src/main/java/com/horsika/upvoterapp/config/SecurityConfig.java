@@ -27,9 +27,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.OPTIONS, "/**") //let preflights in
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.OPTIONS, "/**")//let preflights in
                         .permitAll()
-                        .requestMatchers("/valami").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name()) //TODO determine endpoint secu
+                        .requestMatchers("/api/auth/**").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
+                        .requestMatchers("/api/ideas/create-idea").hasAnyRole(UserRole.USER.name())
+                        .requestMatchers("/api/ideas/list-enabled").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
+                        .requestMatchers("/api/ideas/list-disabled").hasAnyRole(UserRole.ADMIN.name())
+                        .requestMatchers("api/ideas/enable-idea").hasAnyRole(UserRole.ADMIN.name())
+                        .requestMatchers("/api/votes/vote").hasAnyRole(UserRole.USER.name())
                         .anyRequest()
                         .authenticated()
                 )

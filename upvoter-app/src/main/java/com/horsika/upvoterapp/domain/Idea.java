@@ -1,5 +1,6 @@
 package com.horsika.upvoterapp.domain;
 
+import com.horsika.upvoterapp.dto.IdeaCommand;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,9 @@ public class Idea {
     @OneToMany(mappedBy = "idea")
     private List<Vote> votes;
 
-    // TODO constructor based on dto
+    public Idea(IdeaCommand ideaComm) {
+        this.name = ideaComm.getTitle();
+        this.description = ideaComm.getDescription();
+        this.accepted = Boolean.FALSE;
+    }
 }

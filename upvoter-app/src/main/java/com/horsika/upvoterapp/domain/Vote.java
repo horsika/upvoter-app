@@ -1,5 +1,6 @@
 package com.horsika.upvoterapp.domain;
 
+import com.horsika.upvoterapp.dto.VoteCommand;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,9 @@ public class Vote {
     @ManyToOne
     @JoinColumn(name = "idea_id")
     private Idea idea;
+
+    public Vote(VoteCommand voteCommand, Idea idea) {
+        this.voteValue = voteCommand.getVote();
+        this.idea = idea;
+    }
 }
