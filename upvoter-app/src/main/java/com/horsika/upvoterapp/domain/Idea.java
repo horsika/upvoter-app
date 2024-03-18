@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,6 +23,9 @@ public class Idea {
 
     @Column(name = "accepted")
     private Boolean accepted;
+
+    @OneToMany(mappedBy = "idea")
+    private List<Vote> votes;
 
     // TODO constructor based on dto
 }

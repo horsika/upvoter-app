@@ -19,7 +19,7 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "voter_id")
-    private User voter;
+    private AppUser voter;
 
     @ManyToOne
     @JoinColumn(name = "idea_id")

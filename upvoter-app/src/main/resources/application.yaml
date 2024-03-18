@@ -5,12 +5,12 @@ spring:
         password: root
         driver-class-name: org.postgresql.Driver
     jpa:
-    hibernate:
-        ddl-auto: update
-    properties:
         hibernate:
-            show_sql: true
-            format_sql: true
-            dialect: org.hibernate.dialect.PostgreSQLDialect
-    generate-ddl: true
+            ddl-auto: update
+        properties:
+            hibernate:
+                show_sql: true
+                format_sql: true
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+        generate-ddl: true
 

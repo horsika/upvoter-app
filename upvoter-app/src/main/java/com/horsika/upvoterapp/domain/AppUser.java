@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class User implements UserDetails {
+public class AppUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @JoinTable(name = "account_role")
     private UserRole role;
+
+    @OneToMany(mappedBy = "voter")
+    private List<Vote> votes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

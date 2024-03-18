@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.horsika.upvoterapp.domain.User;
+import com.horsika.upvoterapp.domain.AppUser;
 
 @Service
 public class JwtService {
@@ -31,10 +31,10 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(User user) {
+    public String generateToken(AppUser appUser) {
         HashMap<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("role", user.getRole());
-        return generateToken(extraClaims, user);
+        extraClaims.put("role", appUser.getRole());
+        return generateToken(extraClaims, appUser);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
