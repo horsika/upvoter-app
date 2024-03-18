@@ -1,5 +1,6 @@
 package com.horsika.upvoterapp.controller;
 
+import com.horsika.upvoterapp.dto.AcceptRejectIdeaCommand;
 import com.horsika.upvoterapp.dto.IdeaCommand;
 import com.horsika.upvoterapp.dto.IdeaListItem;
 import com.horsika.upvoterapp.service.IdeaService;
@@ -18,13 +19,13 @@ public class IdeaController {
     private final IdeaService ideaService;
 
     @GetMapping("/list-enabled")
-    public ResponseEntity<List<IdeaListItem>> listEnabledIdeas() {
-        return new ResponseEntity<>(ideaService.listEnabledIdeas(), HttpStatus.OK);
+    public ResponseEntity<List<IdeaListItem>> listAcceptedIdeas() {
+        return new ResponseEntity<>(ideaService.listAcceptedIdeas(), HttpStatus.OK);
     }
 
     @GetMapping("/list-disabled")
-    public ResponseEntity<List<IdeaListItem>> listDisabledIdeas() {
-        return new ResponseEntity<>(ideaService.listDisabledIdeas(), HttpStatus.OK);
+    public ResponseEntity<List<IdeaListItem>> listNoDecisionIdeas() {
+        return new ResponseEntity<>(ideaService.listNoDecisionIdeas(), HttpStatus.OK);
     }
 
     @PostMapping("create-idea")
@@ -34,8 +35,8 @@ public class IdeaController {
     }
 
     @PutMapping("enable-idea")
-    public ResponseEntity<Void> enableIdea(@RequestBody Long id) {
-        ideaService.enableIdea(id);
+    public ResponseEntity<Void> enableIdea(@RequestBody AcceptRejectIdeaCommand command) {
+        ideaService.enableIdea(command);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

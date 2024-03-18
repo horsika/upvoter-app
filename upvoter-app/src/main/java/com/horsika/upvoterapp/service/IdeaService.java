@@ -1,6 +1,8 @@
 package com.horsika.upvoterapp.service;
 
 import com.horsika.upvoterapp.domain.Idea;
+import com.horsika.upvoterapp.domain.IdeaStatus;
+import com.horsika.upvoterapp.dto.AcceptRejectIdeaCommand;
 import com.horsika.upvoterapp.dto.IdeaCommand;
 import com.horsika.upvoterapp.dto.IdeaListItem;
 import com.horsika.upvoterapp.repository.IdeaRepository;
@@ -15,12 +17,12 @@ public class IdeaService {
 
     private final IdeaRepository ideaRepository;
 
-    public List<IdeaListItem> listEnabledIdeas() {
-        return ideaRepository.findAllByAcceptedIsTrue().stream().map(IdeaListItem::new).toList();
+    public List<IdeaListItem> listAcceptedIdeas() {
+        return ideaRepository.findAllByStatus(IdeaStatus.ACCEPTED).stream().map(IdeaListItem::new).toList();
     }
 
-    public List<IdeaListItem> listDisabledIdeas() {
-        return ideaRepository.findAllByAcceptedIsFalse().stream().map(IdeaListItem::new).toList();
+    public List<IdeaListItem> listNoDecisionIdeas() {
+        return ideaRepository.findAllByStatus(IdeaStatus.NO_DECISION).stream().map(IdeaListItem::new).toList();
     }
 
     public void createIdea(IdeaCommand ideaCommand) {
@@ -31,9 +33,9 @@ public class IdeaService {
         return ideaRepository.findIdeaByIdeaId(id).orElseThrow();
     }
 
-    public void enableIdea(Long id) {
-        Idea idea = findIdeaById(id);
-        idea.setAccepted(Boolean.TRUE);
+    public void enableIdea(AcceptRejectIdeaCommand command) {
+        Idea idea = findIdeaById(command.getIdeaId());
+        idea.setStatus(IdeaStatus.valueOf(command.getDecision()));
         ideaRepository.save(idea);
     }
 

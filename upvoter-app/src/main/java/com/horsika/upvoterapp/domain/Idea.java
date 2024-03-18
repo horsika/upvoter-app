@@ -22,8 +22,9 @@ public class Idea {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Enumerated
     @Column(name = "accepted")
-    private Boolean accepted;
+    private IdeaStatus status;
 
     @OneToMany(mappedBy = "idea")
     private List<Vote> votes;
@@ -31,6 +32,6 @@ public class Idea {
     public Idea(IdeaCommand ideaComm) {
         this.name = ideaComm.getTitle();
         this.description = ideaComm.getDescription();
-        this.accepted = Boolean.FALSE;
+        this.status = IdeaStatus.NO_DECISION;
     }
 }
