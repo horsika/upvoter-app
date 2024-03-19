@@ -1,6 +1,7 @@
 package com.horsika.upvoterapp.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -19,7 +20,8 @@ import com.horsika.upvoterapp.domain.AppUser;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "mysupersecretkeythatkeepseverythingverysecretshhhhh";
+    private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+
     private static final int TOKEN_EXPIRATION =  7_200_000; // 2 hours
 
     public String extractUsername(String token) {
@@ -62,13 +64,18 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (JwtException e) {
+            System.err.println("Error parsing JWT token: " + e.getMessage());
+            throw e; // Rethrow the exception to propagate it further if needed
+        }
     }
+
 
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
