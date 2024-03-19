@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(schema = "upvoter")
 public class Vote {
 
     @Id

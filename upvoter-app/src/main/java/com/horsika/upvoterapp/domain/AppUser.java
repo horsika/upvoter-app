@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table(schema = "upvoter")
 @Data
 @NoArgsConstructor
 public class AppUser implements UserDetails {
@@ -52,17 +53,17 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

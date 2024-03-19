@@ -19,7 +19,7 @@ import com.horsika.upvoterapp.domain.AppUser;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "my-super-secret-key-that-keeps-everything-very-secret-shhhhh";
+    private static final String SECRET_KEY = "mysupersecretkeythatkeepseverythingverysecretshhhhh";
     private static final int TOKEN_EXPIRATION =  7_200_000; // 2 hours
 
     public String extractUsername(String token) {

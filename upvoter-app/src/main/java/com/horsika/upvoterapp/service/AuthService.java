@@ -22,18 +22,25 @@ public class AuthService {
     private final JwtService jwtService;
 
     public void register(RegisterLoginCommand register) {
+
+        if(userRepository.findByUsername(register.getUserName()).isPresent()) {
+            return;
+        }
+
         AppUser user = new AppUser();
         user.setUserName(register.getUserName());
         user.setPassHash(passwordEncoder.encode(register.getPass()));
-        user.setRole(UserRole.USER); // admins are only made by setting the role directly in the db
+        user.setRole(UserRole.ROLE_USER); // admins are only made by setting the role directly in the db
+        userRepository.save(user);
     }
 
     public TokenResponse authenticate(RegisterLoginCommand command) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(command.getUserName(), command.getPass())
         );
 
-        AppUser user = userRepository.findByUserName(command.getUserName())
+        AppUser user = userRepository.findByUsername(command.getUserName())
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
         String jwtToken = jwtService.generateToken(user);

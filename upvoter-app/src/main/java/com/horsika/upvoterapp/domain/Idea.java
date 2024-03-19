@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(schema = "upvoter")
 public class Idea {
 
     @Id

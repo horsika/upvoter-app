@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 col-md-4 col-sm-12 bg-dark text-light">
+      <h2>Menu</h2>
+      <ul class="list-unstyled">
+        <li><a (click)="chooseIdea()">Idea Form</a></li>
+        <li><a (click)="chooseList()">List of Ideas</a></li>
+      </ul>
+    </div>
+    <!-- Main Content -->
+    <div class="col-lg-9 col-md-8 col-sm-12">
+      <div *ngIf="menuChoice === 'VotingList'">
+        <ul class="list-group-flush">
+          <li *ngFor="let idea of ideaList" >
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

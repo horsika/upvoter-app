@@ -1,0 +1,28 @@
+<div class="container-sm mt-5 text-center">
+
+  <div class="card">
+    <div class="card-header">
+      Register or Login
+    </div>
+
+    <div class="card-body p-4">
+      <form [formGroup]="registerOrLogin" class="form-group m-1">
+        <div>
+          <label class="m-1" for="userName">Username</label>
+          <input type="text" class="from-control m-1" id="userName" placeholder="Enter your username here" formControlName="userName">
+        </div>
+        <div>
+          <label class="m-1" for="pass">Password</label>
+          <input  type="password" class="from-control m-1" id="pass" placeholder="Enter your password here" formControlName="pass">
+        </div>
+      </form>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn btn-danger m-1" (click)="onRegister()">Register</button>
+      <button class="btn btn-outline-danger m-1" (click)="onLogin()">Login</button>
+    </div>
+  </div>
+
+</div>
+

@@ -26,8 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestBody RegisterLoginCommand command) {
-        authService.authenticate(command);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(authService.authenticate(command), HttpStatus.OK);
     }
 
 }

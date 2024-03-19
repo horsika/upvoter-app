@@ -8,12 +8,14 @@ import java.util.stream.Collectors;
 @Data
 public class IdeaListItem {
 
+    private Long id;
     private String title;
     private String description;
     private int upVotes;
     private int downVotes;
 
     public IdeaListItem(Idea idea) {
+        this.id = idea.getIdeaId();
         this.title = idea.getName();
         this.description = idea.getDescription();
         this.upVotes = (int) idea.getVotes().stream().filter(vote -> vote.getVoteValue() == Boolean.TRUE).count();

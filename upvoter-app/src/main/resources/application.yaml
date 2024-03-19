@@ -14,3 +14,11 @@ spring:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
         generate-ddl: true
 
+logging:
+    level:
+        com.horsika: info
+        org.springframework.web: info
+        org.hibernate: error
+        org.springframework.security: debug
+    pattern:
+        console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
