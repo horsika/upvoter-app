@@ -11,6 +11,7 @@ import {UserService} from "../../../services/user.service";
 export class RegisterLoginComponent implements OnInit {
 
   registerOrLogin: FormGroup;
+  registered: boolean = false;
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private userService: UserService) {
@@ -26,11 +27,14 @@ export class RegisterLoginComponent implements OnInit {
   onRegister() {
     const data = this.registerOrLogin.value
     this.userService.register(data).subscribe({
-      complete: () => this.router.navigate(["/register-login"])
+      next:() => {},
+      error: () => this.registered = false,
+      complete: () => this.registered = true
     })
   }
 
   onLogin() {
+    this.registered = false
     const data = this.registerOrLogin.value
     this.userService.login(data).subscribe({
       next: value => {

@@ -21,6 +21,7 @@
     <div class="card-footer">
       <button class="btn btn-danger m-1" (click)="onRegister()">Register</button>
       <button class="btn btn-outline-danger m-1" (click)="onLogin()">Login</button>
+      <p *ngIf="registered">Registered! Now press the login button!</p>
     </div>
   </div>
 
