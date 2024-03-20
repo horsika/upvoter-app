@@ -27,7 +27,8 @@ public class Vote {
     @JoinColumn(name = "idea_id")
     private Idea idea;
 
-    public Vote(VoteCommand voteCommand, Idea idea) {
+    public Vote(VoteCommand voteCommand, Idea idea, AppUser appUser) {
+        this.voter = appUser;
         this.voteValue = voteCommand.getVote();
         this.idea = idea;
     }

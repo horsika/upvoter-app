@@ -13,7 +13,7 @@ import {VoteCommand} from "../../../models/votecommand.model";
 export class UserDashComponent implements OnInit {
 
   idea: FormGroup;
-  menuChoice: string = '';
+  menuChoice: string | undefined;
   ideaList: IdeaListItem[] = [];
 
   constructor(private userService: UserService,
@@ -26,37 +26,57 @@ export class UserDashComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.menuChoice = "VotingList"
+    this.menuChoice = 'VotingList'
   }
 
   chooseList() {
-    this.menuChoice = "VotingList"
-    this.userService.listIdeaUser().subscribe({
+    this.menuChoice = 'VotingList'
+    const data = this.userService.getSessionVotes()
+    this.userService.listIdeaUser(data).subscribe({
       next: value => this.ideaList = value
     })
   }
 
   chooseIdea() {
-    this.menuChoice = "IdeaForm"
+    this.menuChoice = 'IdeaForm'
   }
 
   submitIdea() {
     const data = this.idea.value
     this.userService.submitIdea(data).subscribe({
-        complete: () => this.router.navigate(["/user-dash"])
+        complete: () => this.chooseList()
       }
     )
   }
 
   castUpVote(ideaId: number) {
+    this.storeSessionVotes(ideaId)
     const data: VoteCommand = {vote: true, ideaId: ideaId}
-    this.userService.castVote(data).subscribe({})
+    this.userService.castVote(data).subscribe({
+      complete: () => this.chooseList()
+    })
   }
 
   castDownVote(ideaId: number) {
+    this.storeSessionVotes(ideaId)
     const data: VoteCommand = {vote: false, ideaId: ideaId}
-    this.userService.castVote(data).subscribe({})
+    this.userService.castVote(data).subscribe({
+      complete: () => this.chooseList()
+    })
   }
+
+  storeSessionVotes(ideaId: number) {
+    const sessionVotes = localStorage.getItem('session-votes')
+    if(sessionVotes == null) {
+      const idArray = [ideaId];
+      localStorage.setItem('session-votes', JSON.stringify(idArray))
+    } else {
+      const idArray = JSON.parse(sessionVotes);
+      idArray.push(ideaId)
+      localStorage.setItem('session-votes', JSON.stringify(idArray))
+    }
+  }
+
 
 
 }

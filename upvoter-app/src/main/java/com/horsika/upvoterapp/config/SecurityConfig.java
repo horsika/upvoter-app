@@ -37,14 +37,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() //let preflights in
                         .requestMatchers("/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/ideas/create-idea").hasAnyRole("USER")
                         .requestMatchers("/api/ideas/list-enabled").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/api/ideas/list-disabled").hasAnyRole("ADMIN")
-                        .requestMatchers("/api/ideas/enable-idea").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/ideas/decide-idea-status").hasAnyRole("ADMIN")
                         .requestMatchers("/api/votes/vote").hasAnyRole("USER")
                         .anyRequest()
                         .authenticated()

@@ -1,22 +1,50 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-lg-3 col-md-4 col-sm-12 bg-dark text-light">
+    <div class="col-lg-3 col-md-4 vh-100 col-sm-12 bg-light text-dark">
       <h2>Menu</h2>
       <ul class="list-unstyled">
-        <li><a (click)="chooseIdea()">Idea Form</a></li>
-        <li><a (click)="chooseList()">List of Ideas</a></li>
+        <li><button class="btn " (click)="chooseIdea()">Idea Form</button></li>
+        <li><button class="btn" (click)="chooseList()">List of Ideas</button></li>
       </ul>
     </div>
     <!-- Main Content -->
-    <div class="col-lg-9 col-md-8 col-sm-12">
-      <div *ngIf="menuChoice === 'VotingList'">
-        <ul class="list-group-flush">
-          <li *ngFor="let idea of ideaList" >
+    <div class="col-lg-9 col-md-8 col-sm-12" [ngSwitch]="menuChoice">
+
+      <!-- List of ideas -->
+      <div *ngSwitchCase="'VotingList'">
+        <ul class="list-group-flush m-4">
+          <li *ngFor="let idea of ideaList" class="my-5">
+            <div class="row">
+              <div class="col-9">
+                <h5>{{idea.title}}</h5>
+                <p>{{idea.description}}</p>
+                <p>Up votes: {{idea.upVotes}}</p>
+                <p>Down votes: {{idea.downVotes}}</p>
+              </div>
+              <div class="col-3">
+                <div class="d-grid gap-2">
+                  <button class="btn btn-success" (click)="castUpVote(idea.id)">Upvote</button>
+                  <button class="btn btn-danger" (click)="castDownVote(idea.id)">Downvote</button>
+                </div>
+              </div>
+            </div>
 
           </li>
         </ul>
       </div>
+
+        <!-- New Idea Form -->
+        <div *ngSwitchCase="'IdeaForm'">
+          <form [formGroup]="idea" class="form-group m-4">
+            <label for="title">Title</label>
+            <input id="title" class="form-control" formControlName="title" placeholder="Write the title of the idea here">
+            <label for="desc">Description</label>
+            <textarea id="desc" class="form-control" formControlName="description" placeholder="Write your description here"></textarea>
+            <button class=" btn btn-outline-danger mt-2" (click)="submitIdea()">Submit Idea</button>
+          </form>
+        </div>
+
     </div>
   </div>
 </div>

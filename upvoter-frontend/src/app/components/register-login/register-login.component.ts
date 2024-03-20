@@ -34,7 +34,6 @@ export class RegisterLoginComponent implements OnInit {
     const data = this.registerOrLogin.value
     this.userService.login(data).subscribe({
       next: value => {
-        console.log(value.token)
         localStorage.setItem('token', value.token)
       },
       complete: () => {

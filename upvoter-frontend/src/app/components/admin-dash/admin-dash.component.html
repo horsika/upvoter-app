@@ -1,1 +1,58 @@
-<p>admin-dash works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 col-md-4 vh-100 col-sm-12 bg-light text-dark">
+      <h2>Menu</h2>
+      <ul class="list-unstyled">
+        <li>
+          <button class="btn " (click)="chooseIdeas()">List of Ideas</button>
+        </li>
+        <li>
+          <button class="btn" (click)="chooseNewIdeas()">List of Unapproved Ideas</button>
+        </li>
+      </ul>
+    </div>
+    <!-- Main Content -->
+    <div class="col-lg-9 col-md-8 col-sm-12" [ngSwitch]="menuChoice">
+
+      <!-- List of ideas -->
+      <div *ngSwitchCase="'VotingList'">
+        <ul class="list-group-flush m-4">
+          <li *ngFor="let idea of ideaList" class="my-5">
+              <div class="col-9">
+                <h5>{{ idea.title }}</h5>
+                <p>{{ idea.description }}</p>
+                <p>Up votes: {{ idea.upVotes }}</p>
+                <p>Down votes: {{ idea.downVotes }}</p>
+              </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- New Idea Form -->
+      <div *ngSwitchCase="'NewIdeas'">
+        <ul class="list-group-flush m-4">
+          <li *ngFor="let idea of newIdeaList" class="my-5">
+            <div class="row">
+              <div class="col-9">
+                <h5>{{ idea.title }}</h5>
+                <p>{{ idea.description }}</p>
+                <p>Up votes: {{ idea.upVotes }}</p>
+                <p>Down votes: {{ idea.downVotes }}</p>
+              </div>
+              <div class="col-3">
+                <div class="d-grid gap-2">
+                  <button class="btn btn-success" (click)="accept(idea.id)">Accept</button>
+                  <button class="btn btn-danger" (click)="reject(idea.id)">Reject</button>
+                </div>
+              </div>
+            </div>
+
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+

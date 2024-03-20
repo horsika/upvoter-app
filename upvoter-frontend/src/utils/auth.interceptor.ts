@@ -13,10 +13,10 @@ export class AuthInterceptor implements HttpInterceptor {
     if (token !== null
       && JSON.parse(atob(token.split('.')[1])).exp > Math.floor(Date.now() / 1000)) { //if expired, don't even send
         const authReq = req.clone({setHeaders: {Authorization: `Bearer ${token}`}});
-        console.log(token)
         return next.handle(authReq);
     } else if(token !== null) {
       localStorage.removeItem('token');
+      localStorage.removeItem('session-votes')
       return next.handle(req);
     } else {
       return next.handle(req);

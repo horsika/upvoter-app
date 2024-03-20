@@ -5,6 +5,7 @@ import com.horsika.upvoterapp.domain.IdeaStatus;
 import com.horsika.upvoterapp.dto.AcceptRejectIdeaCommand;
 import com.horsika.upvoterapp.dto.IdeaCommand;
 import com.horsika.upvoterapp.dto.IdeaListItem;
+import com.horsika.upvoterapp.dto.SessionVotes;
 import com.horsika.upvoterapp.repository.IdeaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,14 @@ public class IdeaService {
 
     private final IdeaRepository ideaRepository;
 
-    public List<IdeaListItem> listAcceptedIdeas() {
-        return ideaRepository.findAllByStatus(IdeaStatus.ACCEPTED).stream().map(IdeaListItem::new).toList();
+    public List<IdeaListItem> listAcceptedIdeas(SessionVotes sessionVotes) {
+        List<Long> excludedIdeaIds = sessionVotes.getIdeaIds();
+        return ideaRepository
+                .findAllByStatus(IdeaStatus.ACCEPTED)
+                .stream()
+                .filter(idea -> !excludedIdeaIds.contains(idea.getIdeaId()))
+                .map(IdeaListItem::new)
+                .toList();
     }
 
     public List<IdeaListItem> listNoDecisionIdeas() {

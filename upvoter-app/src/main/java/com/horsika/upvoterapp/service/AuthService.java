@@ -47,5 +47,9 @@ public class AuthService {
         return new TokenResponse(jwtToken);
     }
 
+    public AppUser findByUsername(String userName) {
+        return userRepository.findByUsername(userName).orElseThrow();
+    }
+
 
 }

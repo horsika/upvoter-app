@@ -8,6 +8,7 @@ import {IdeaCommand} from "../models/ideacommand.model";
 import {IdeaListItem} from "../models/idealistitem.model";
 import {AcceptRejectIdeaCommand} from "../models/acceptrejectcommand";
 import {VoteCommand} from "../models/votecommand.model";
+import {SessionVotes} from "../models/sessionvotes";
 
 const baseUrl = environment.BASE_URL;
 
@@ -30,20 +31,34 @@ export class UserService {
     return this.http.post(baseUrl + "/api/ideas/create-idea", data)
   }
 
-  listIdeaUser() {
-    return this.http.get<Array<IdeaListItem>>(baseUrl + "/api/ideas/list-enabled")
+  listIdeaUser(data: SessionVotes) {
+    return this.http.post<Array<IdeaListItem>>(baseUrl + "/api/ideas/list-enabled", data)
   }
 
   listIdeaAdmin() {
     return this.http.get<Array<IdeaListItem>>(baseUrl + "/api/ideas/list-disabled")
   }
 
-  enableIdea(data: AcceptRejectIdeaCommand) {
-    return this.http.post(baseUrl + "/api/ideas/enable-idea", data)
+  decideIdeaStatus(data: AcceptRejectIdeaCommand) {
+    return this.http.put(baseUrl + "/api/ideas/decide-idea-status", data)
   }
 
   castVote(data: VoteCommand) {
     return this.http.post(baseUrl + "/api/votes/vote", data)
+  }
+
+  getSessionVotes() {
+    const votedIdeasString = localStorage.getItem('session-votes')
+    if(votedIdeasString != null) {
+      const votedIdeas = JSON.parse(votedIdeasString);
+      const data: SessionVotes = {ideaIds: votedIdeas}
+      return data
+    } else {
+      const data: SessionVotes = {ideaIds: []}
+      return data
+    }
+
+
   }
 
 }
